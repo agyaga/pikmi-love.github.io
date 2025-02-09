@@ -10,7 +10,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f8f9fa;
+            background-color: #ffc0cb; /* Pink background */
             font-family: Arial, sans-serif;
             flex-direction: column;
         }
@@ -22,8 +22,9 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             background-color: #fff;
         }
-        .card h1 {
+        .card h1, .card .message {
             margin-bottom: 20px;
+            font-weight: bold;
         }
         .buttons {
             margin-top: 20px;
@@ -50,16 +51,23 @@
             display: block;
             margin-bottom: 20px;
         }
+        .message {
+            display: none;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #dc3545; /* Red color for the message */
+        }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Cat Poke" class="initial-gif">
-        <h1>Ты будешь моей пикми?</h1>
+        <img src="https://media.giphy.com/media/KztT2c4u8mYYUiMKdJ/giphy.gif?cid=790b76116zhm7ntfc8ctofxb5tmb7zhv9pz4hr6lj7pw9r1q&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="Cute Cat" class="initial-gif">
+        <h1 class="question">Ты будешь моей пикми?</h1>
         <div class="buttons">
             <button class="yes">Да</button>
             <button class="no">Нет</button>
         </div>
+        <div class="message">Я знал, что ты согласишься!</div>
         <img src="https://media.giphy.com/media/l2QDM9Jnim1YVILXa/giphy.gif" alt="Cat Hug" class="gif">
     </div>
 
@@ -69,14 +77,36 @@
         const initialGif = document.querySelector('.initial-gif');
         const gif = document.querySelector('.gif');
         const buttons = document.querySelector('.buttons');
+        const message = document.querySelector('.message');
+        const question = document.querySelector('.question');
+
+        const noButtonTexts = [
+            "Уверена?",
+            "100%?",
+            "Подумай, пожалуйста",
+            "Просто подумай",
+            "Если скажешь нет, я сильно расстроюсь",
+            "Я сильно расстроюсь",
+            "Я очень расстроюсь",
+            "Ладно, я передумал"
+        ];
+        let noButtonClickCount = 0;
 
         noButton.addEventListener('click', () => {
             let currentFontSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
             yesButton.style.fontSize = (currentFontSize * 2) + 'px';
+
+            if (noButtonClickCount < noButtonTexts.length) {
+                noButton.textContent = noButtonTexts[noButtonClickCount];
+                noButtonClickCount++;
+            }
         });
 
         yesButton.addEventListener('click', () => {
+            initialGif.style.display = 'none';
             buttons.style.display = 'none';
+            question.style.display = 'none';
+            message.style.display = 'block';
             gif.style.display = 'block';
         });
     </script>
